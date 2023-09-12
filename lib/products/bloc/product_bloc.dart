@@ -32,16 +32,23 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     try {
       if (state.status == ProductStatus.initial) {
         final productsStream = productRepository.products();
-        emitter.onEach(productsStream, onData: (products) {
-          return emitter(state.copyWith(
-            status: ProductStatus.success,
-            products: products,
-            hasReachedMax: false,
-          ));
-        });
+        emitter.onEach(
+          productsStream,
+          onData: (products) {
+            return emitter(
+              state.copyWith(
+                status: ProductStatus.success,
+                products: products,
+                hasReachedMax: false,
+              ),
+            );
+          },
+        );
       }
     } catch (e) {
-      emitter(state.copyWith(status: ProductStatus.failure));
+      emitter(
+        state.copyWith(status: ProductStatus.failure),
+      );
     }
   }
 }
