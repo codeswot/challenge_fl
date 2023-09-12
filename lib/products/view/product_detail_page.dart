@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:challenge_fl/products/models/product_model.dart';
 import 'package:challenge_fl/products/widgets/widgets.dart';
 import 'package:challenge_fl/shared/shared.dart';
+import 'package:challenge_fl/shared/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -33,8 +33,40 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             vertical: 15.h,
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ProductDetailImage(widget.product),
+              SizedBox(height: 30.h),
+              Text(
+                widget.product.name,
+                style: AppTyography.headline_600(),
+              ),
+              SizedBox(height: 30.h),
+              Text(
+                'Size',
+                style: AppTyography.headline_400().copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: 10.h),
+              SizePicker(
+                sizes: widget.product.sizes.map((e) => e as num).toList(),
+                onSizePick: (size) {
+                  debugPrint('size $size');
+                },
+              ),
+              SizedBox(height: 30.h),
+              Text(
+                'Description',
+                style: AppTyography.headline_400().copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: 10.h),
+              Text(
+                widget.product.description,
+                style: AppTyography.bodyText_200(),
+              ),
             ],
           ),
         ),
@@ -43,116 +75,58 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 }
 
-class ProductDetailImage extends StatefulWidget {
-  const ProductDetailImage(this.product, {super.key});
-  final Product product;
-
-  @override
-  State<ProductDetailImage> createState() => _ProductDetailImageState();
-}
-
-class _ProductDetailImageState extends State<ProductDetailImage> {
-  int index = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(0.5.sp),
-      decoration: BoxDecoration(
-        // i know this is off the design, but with the image having a background of white, this is is a possible workaround
-        color: AppColors.neutral300.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Container(
-        width: double.infinity,
-        height: 312.h,
-        decoration: BoxDecoration(
-          //changed the color due to the image background white
-          // color: AppColors.neutral300.withOpacity(0.5),
-          color: AppColors.neutralWhite,
-
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: PageView.builder(
-          itemCount: widget.product.images.length,
-          itemBuilder: ((context, index) {
-            final image = widget.product.images[index];
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 31.w),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: CachedNetworkImage(
-                        imageUrl: image,
-                        progressIndicatorBuilder:
-                            (context, url, downloadProgress) =>
-                                CircularProgressIndicator(
-                                    value: downloadProgress.progress),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                      ),
-                    ),
-                  ),
-                  //
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: widget.product.images
-                            .map(
-                              (e) => ProductDetailImagePageIndicator(
-                                e == widget.product.images[index],
-                              ),
-                            )
-                            .toList(),
-                      ),
-                      const ProductColorPicker(),
-                    ],
-                  )
-                ],
-              ),
-            );
-          }),
-          onPageChanged: (v) {
-            setState(() {
-              index = v;
-            });
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class ProductDetailImagePageIndicator extends StatelessWidget {
-  const ProductDetailImagePageIndicator(this.isSelected, {super.key});
-  final bool isSelected;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 10.w),
-      width: 7.w,
-      height: 7.h,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: isSelected ? AppColors.neutral500 : AppColors.neutral300,
-      ),
-    );
-  }
-}
-
-class ProductColorPicker extends StatelessWidget {
-  const ProductColorPicker({
+class SizePicker extends StatefulWidget {
+  const SizePicker({
+    this.onSizePick,
+    required this.sizes,
     super.key,
   });
+  final Function(num size)? onSizePick;
+  final List<num> sizes;
 
   @override
+  State<SizePicker> createState() => _SizePickerState();
+}
+
+class _SizePickerState extends State<SizePicker> {
+  num currentSize = 39;
+  @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(
-      AppAssets.fakeColorPicker,
-      width: 150.w,
-      height: 60.h,
+    return Row(
+      children: widget.sizes
+          .map(
+            (size) => GestureDetector(
+              onTap: () {
+                setState(() {
+                  currentSize = size;
+                });
+                widget.onSizePick?.call(size);
+              },
+              child: Container(
+                width: 40.w,
+                height: 40.h,
+                margin: EdgeInsets.only(right: 15.w),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: currentSize != size ? Border.all() : null,
+                  color: currentSize == size
+                      ? AppColors.neutral500
+                      : Colors.transparent,
+                ),
+                child: Center(
+                  child: Text(
+                    size.toString(),
+                    style: AppTyography.headline_300().copyWith(
+                      color: currentSize == size
+                          ? AppColors.neutralWhite
+                          : AppColors.neutral400,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 }
