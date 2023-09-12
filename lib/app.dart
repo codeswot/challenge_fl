@@ -2,6 +2,8 @@ import 'package:challenge_fl/products/view/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'shared/shared.dart';
+
 class App extends StatelessWidget {
   const App({super.key});
 
@@ -22,10 +24,7 @@ class AppView extends MaterialApp {
   AppView({super.key})
       : super(
           title: 'Challenge FL',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
+          theme: appTheme,
           home: const ProductsPage(),
         );
 }
