@@ -8,12 +8,16 @@ class FirebaseProductRepository implements ProductRepository {
 
   @override
   Stream<List<Product>> products() {
-    return productsCollection.snapshots().map((snapshot) {
-      return snapshot.docs
-          .map(
-            (doc) => Product.fromSnapshot(doc),
-          )
-          .toList();
-    });
+    try {
+      return productsCollection.snapshots().map((snapshot) {
+        return snapshot.docs
+            .map(
+              (doc) => Product.fromSnapshot(doc),
+            )
+            .toList();
+      });
+    } catch (e) {
+      rethrow;
+    }
   }
 }

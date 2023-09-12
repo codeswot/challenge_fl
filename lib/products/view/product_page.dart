@@ -18,7 +18,7 @@ class ProductsPage extends StatelessWidget {
         create: (_) => ProductBloc(
           FirebaseProductRepository(),
         )..add(
-            ProductFethed(),
+            ProductFetched(),
           ),
         child: SafeArea(
           child: Column(

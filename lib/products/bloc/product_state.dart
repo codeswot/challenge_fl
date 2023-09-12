@@ -31,7 +31,7 @@ final class ProductState extends Equatable {
 
   @override
   String toString() {
-    return '''ProductState { status: $status, hasReachedMax: $hasReachedMax, posts: ${products.length} }''';
+    return '''ProductState { status: $status, hasReachedMax: $hasReachedMax, products: ${products.length} }''';
   }
 
   @override

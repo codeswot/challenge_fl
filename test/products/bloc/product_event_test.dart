@@ -11,14 +11,14 @@ void main() {
       group('ProductsFetch', () {
         test('supports value equality', () {
           expect(
-            ProductFethed(),
-            equals(ProductFethed()),
+            ProductFetched(),
+            equals(ProductFetched()),
           );
         });
 
         test('props are correct', () {
           expect(
-            ProductFethed().props,
+            ProductFetched().props,
             equals(<Object?>[]),
           );
         });

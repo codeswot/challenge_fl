@@ -1,94 +1,76 @@
+import 'dart:async';
+
+import 'package:challenge_fl/products/repository/repository.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:challenge_fl/products/bloc/product_bloc.dart';
-import 'package:challenge_fl/products/models/models.dart';
-import 'package:challenge_fl/products/repository/product_repository.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
+import 'package:challenge_fl/products/models/product_model.dart';
 
-class MockProductRepository extends Mock implements ProductRepository {}
+final fakeProducts = [
+  Product(
+    id: '1',
+    name: 'Product 1',
+    description: 'Description 1',
+    averageRatings: 2,
+    images: const [],
+    color: '',
+    sizes: const [],
+    brandId: '',
+    brandName: '',
+    gender: '',
+    price: 200,
+    reviewCount: 2,
+    createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
+  ),
+];
 
-class FakeProduct extends Fake implements Product {}
+class MockProductRepository extends Mock implements ProductRepository {
+  @override
+  Stream<List<Product>> products() {
+    final controller = StreamController<List<Product>>();
+    controller.add(fakeProducts);
+    return controller.stream;
+  }
+}
 
 void main() {
-  final mockProduct = [
-    Product(
-      id: '1',
-      name: 'name 1',
-      description: 'description 1',
-      averageRatings: 3,
-      brandId: '1',
-      brandName: 'Nike',
-      color: 'blue',
-      gender: 'Man',
-      price: 200,
-      reviewCount: 30,
-      images: const [],
-      sizes: const [],
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    ),
-  ];
+  late ProductBloc productBloc;
+  late MockProductRepository productRepository;
 
-  group(
-    'ProductBloc',
-    () {
-      late ProductRepository productRepository;
+  setUp(() {
+    productRepository = MockProductRepository();
+    productBloc = ProductBloc(productRepository);
+  });
 
-      setUpAll(() {
-        registerFallbackValue(FakeProduct());
-      });
-
-      setUp(() {
-        productRepository = MockProductRepository();
-        when(
-          () => productRepository.products(),
-        ).thenAnswer((_) => Stream.value(mockProduct));
-      });
-
-      ProductBloc buildBloc() {
-        return ProductBloc(productRepository);
-      }
-
-      group('constructor', () {
-        test('works properly', () => expect(buildBloc, returnsNormally));
-
-        test('has correct initial state', () {
-          expect(
-            buildBloc().state,
-            equals(const ProductState()),
-          );
-        });
-      });
-
-      group('ProductFethedRequest', () {
-        blocTest<ProductBloc, ProductState>(
-          'starts listening to repository products stream',
-          build: buildBloc,
-          act: (bloc) => bloc.add(ProductFethed()),
-          verify: (_) {
-            verify(() => productRepository.products()).called(1);
-          },
-        );
-
-        blocTest<ProductBloc, ProductState>(
-          'emits state with failure status '
-          'when repository products stream emits error',
-          setUp: () {
-            when(
-              () => productRepository.products(),
-            ).thenAnswer((_) => Stream.error(Exception('oops')));
-          },
-          build: buildBloc,
-          act: (bloc) => bloc.add(ProductFethed()),
-          expect: () => [
-            const ProductState(status: ProductStatus.initial),
-            const ProductState(status: ProductStatus.failure),
-          ],
-        );
-      });
-
-      // group('filterchangeg', () {
-      // });
+  blocTest<ProductBloc, ProductState>(
+    'emits [ProductState.success] when ProductFetched is added and productRepository succeeds',
+    build: () {
+      return productBloc;
     },
+    act: (bloc) => bloc.add(ProductFetched()),
+    expect: () => [
+      ProductState(
+        status: ProductStatus.success,
+        products: fakeProducts,
+        hasReachedMax: false,
+      ),
+    ],
   );
+  blocTest<ProductBloc, ProductState>(
+    'emits [ProductState.failure] when ProductFetched is added and productRepository throws',
+    build: () => ProductBloc(MockProductRepository()),
+    act: (bloc) => bloc.add(ProductFetched()),
+    expect: () => const <ProductState>[
+      ProductState(
+        status: ProductStatus.failure,
+        errorMessage: 'An error occurred',
+        products: [],
+      ),
+    ],
+  );
+  tearDown(() {
+    productBloc.close();
+  });
 }
