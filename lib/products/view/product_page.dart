@@ -5,6 +5,7 @@ import 'package:challenge_fl/products/widgets/widgets.dart';
 import 'package:challenge_fl/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ProductsPage extends StatelessWidget {
@@ -19,12 +20,13 @@ class ProductsPage extends StatelessWidget {
         )..add(
             ProductFethed(),
           ),
-        child: const SafeArea(
+        child: SafeArea(
           child: Column(
             children: [
-              ProductPageHeaderCart(),
-              ProductBrandList(),
-              Expanded(child: ProductListPage()),
+              const ProductPageHeaderCart(),
+              const ProductBrandList(),
+              SizedBox(height: 30.h),
+              const Expanded(child: ProductListPage()),
             ],
           ),
         ),
