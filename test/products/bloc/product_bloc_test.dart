@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:challenge_fl/products/repository/repository.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:challenge_fl/products/bloc/product_bloc.dart';
 import 'package:challenge_fl/products/models/product_model.dart';
+import 'package:mocktail/mocktail.dart';
 
 final fakeProducts = [
   Product(
@@ -34,7 +34,6 @@ class MockProductRepository extends Mock implements ProductRepository {
     return controller.stream;
   }
 }
-
 
 void main() {
   late ProductBloc productBloc;
