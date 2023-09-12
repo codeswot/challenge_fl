@@ -1,5 +1,8 @@
+import 'package:challenge_fl/shared/shared.dart';
+import 'package:challenge_fl/shared/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ProductPageHeaderCart extends StatelessWidget {
   const ProductPageHeaderCart({
@@ -18,10 +21,15 @@ class ProductPageHeaderCart extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("Discover"),
+          Text(
+            "Discover",
+            style: AppTyography.headline_700().copyWith(
+              fontWeight: FontWeight.w700,
+            ),
+          ),
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.shopping_bag),
+            icon: SvgPicture.asset(AppAssets.cartIcon),
           ),
         ],
       ),

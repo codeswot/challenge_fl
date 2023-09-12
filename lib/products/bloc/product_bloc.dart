@@ -32,7 +32,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     try {
       if (state.status == ProductStatus.initial) {
         final productsStream = productRepository.products();
-        emitter.onEach(
+        await emitter.onEach(
           productsStream,
           onData: (products) {
             return emitter(
@@ -45,9 +45,12 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           },
         );
       }
-    } catch (e) {
+    } catch (e, t) {
       emitter(
-        state.copyWith(status: ProductStatus.failure),
+        state.copyWith(
+          status: ProductStatus.failure,
+          errorMessage: "$e TRACE $t",
+        ),
       );
     }
   }

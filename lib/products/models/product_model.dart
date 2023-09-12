@@ -6,7 +6,7 @@ export 'product_model.dart';
 class Product extends Equatable {
   const Product({
     required this.id,
-    required this.averageRating,
+    required this.averageRatings,
     required this.brandId,
     required this.brandName,
     required this.color,
@@ -14,7 +14,7 @@ class Product extends Equatable {
     required this.description,
     required this.gender,
     required this.price,
-    required this.reviwesCount,
+    required this.reviewCount,
     required this.images,
     required this.sizes,
     required this.createdAt,
@@ -27,28 +27,28 @@ class Product extends Equatable {
   final String brandId;
   final String brandName;
   final String gender;
-  final double price;
-  final double averageRating;
-  final int reviwesCount;
-  final List<String> images;
-  final List<double> sizes;
+  final num price;
+  final num averageRatings;
+  final num reviewCount;
+  final List<dynamic> images;
+  final List<dynamic> sizes;
   final DateTime createdAt;
   final DateTime updatedAt;
 
   static Product fromJson(Map<String, dynamic> json) {
     return Product(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      description: json['description'] as String,
-      color: json['color'] as String,
-      brandId: json['brandId'] as String,
-      brandName: json['brandName'] as String,
-      gender: json['gender'] as String,
-      price: json['price'] as double,
-      averageRating: json['averageRating'] as double,
-      reviwesCount: json['reviwesCount'] as int,
-      images: json['images'] as List<String>,
-      sizes: json['sizes'] as List<double>,
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      color: json['color'],
+      brandId: json['brandId'],
+      brandName: json['brandName'],
+      gender: json['gender'],
+      price: json['price'],
+      averageRatings: json['averageRatings'],
+      reviewCount: json['reviewCount'],
+      images: json['images'],
+      sizes: json['sizes'],
       createdAt: (json['createdAt'] as Timestamp).toDate(),
       updatedAt: (json['updatedAt'] as Timestamp).toDate(),
     );
@@ -68,8 +68,8 @@ class Product extends Equatable {
       'brandName': brandName,
       'gender': gender,
       'price': price,
-      'averageRating': averageRating,
-      'reviwesCount': reviwesCount,
+      'averageRating': averageRatings,
+      'reviwesCount': reviewCount,
       'images': images,
       'sizes': sizes,
       'createdAt': createdAt,

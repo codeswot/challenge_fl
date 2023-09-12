@@ -5,20 +5,24 @@ enum ProductStatus { initial, success, failure }
 final class ProductState extends Equatable {
   const ProductState({
     this.status = ProductStatus.initial,
+    this.errorMessage = '',
     this.products = const <Product>[],
     this.hasReachedMax = false,
   });
 
   final ProductStatus status;
+  final String errorMessage;
   final List<Product> products;
   final bool hasReachedMax;
 
   ProductState copyWith({
+    String? errorMessage,
     ProductStatus? status,
     List<Product>? products,
     bool? hasReachedMax,
   }) {
     return ProductState(
+      errorMessage: errorMessage ?? this.errorMessage,
       status: status ?? this.status,
       products: products ?? this.products,
       hasReachedMax: hasReachedMax ?? this.hasReachedMax,
@@ -31,5 +35,10 @@ final class ProductState extends Equatable {
   }
 
   @override
-  List<Object> get props => [status, products, hasReachedMax];
+  List<Object> get props => [
+        errorMessage,
+        status,
+        products,
+        hasReachedMax,
+      ];
 }
