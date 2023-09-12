@@ -26,33 +26,49 @@ void main() {
     'ProductState',
     () {
       ProductState createSubject({
+        String errorMessage = '',
         ProductStatus status = ProductStatus.initial,
         List<Product>? products,
+        bool hasReachedMax = false,
       }) {
         return ProductState(
+          errorMessage: errorMessage,
           status: status,
           products: products ?? mockProducts,
+          hasReachedMax: hasReachedMax,
         );
       }
 
       test('supports value equality', () {
         expect(
-          createSubject(),
-          equals(createSubject()),
+          createSubject(
+            errorMessage: '',
+            status: ProductStatus.initial,
+            products: mockProducts,
+            hasReachedMax: false,
+          ).props,
+          equals(<Object?>[
+            '',
+            ProductStatus.initial,
+            mockProducts,
+            false,
+          ]),
         );
       });
 
       test('props are correct', () {
         expect(
           createSubject(
+            errorMessage: '',
             status: ProductStatus.initial,
             products: mockProducts,
+            hasReachedMax: false,
           ).props,
           equals(<Object?>[
+            '',
             ProductStatus.initial,
             mockProducts,
-            // todo: add filter
-            // TodosViewFilter.all, // filter
+            false,
           ]),
         );
       });

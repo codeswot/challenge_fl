@@ -35,6 +35,7 @@ class MockProductRepository extends Mock implements ProductRepository {
   }
 }
 
+
 void main() {
   late ProductBloc productBloc;
   late MockProductRepository productRepository;
