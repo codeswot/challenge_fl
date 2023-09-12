@@ -1,5 +1,4 @@
 import 'package:challenge_fl/shared/shared.dart';
-import 'package:challenge_fl/shared/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

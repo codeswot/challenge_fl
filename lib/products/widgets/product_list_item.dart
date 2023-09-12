@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:challenge_fl/products/models/models.dart';
 import 'package:challenge_fl/products/view/product_detail_page.dart';
 import 'package:challenge_fl/shared/shared.dart';
-import 'package:challenge_fl/shared/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';

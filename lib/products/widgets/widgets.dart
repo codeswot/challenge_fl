@@ -4,3 +4,5 @@ export 'product_brand_list.dart';
 export 'app_default_appbar.dart';
 export 'product_color_picker.dart';
 export 'product_detail_image.dart';
+export 'product_size_picker.dart';
+export 'reviews_section.dart';

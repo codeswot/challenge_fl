@@ -11,4 +11,5 @@ class AppAssets {
   static const brandvans = 'assets/products/vans.svg';
   //
   static const fakeColorPicker = 'assets/products/color.svg';
+  static const fakeStartRating = 'assets/icons/star_review.svg';
 }

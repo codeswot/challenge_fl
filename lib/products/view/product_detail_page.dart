@@ -1,7 +1,6 @@
 import 'package:challenge_fl/products/models/product_model.dart';
 import 'package:challenge_fl/products/widgets/widgets.dart';
 import 'package:challenge_fl/shared/shared.dart';
-import 'package:challenge_fl/shared/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -67,66 +66,66 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 widget.product.description,
                 style: AppTyography.bodyText_200(),
               ),
+              SizedBox(height: 30.h),
+              Text(
+                'Review (${widget.product.reviewCount})',
+                style: AppTyography.headline_400().copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: 10.h),
+              ReviewsSection(
+                widget.product,
+                isShortReview: true,
+              ),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class SizePicker extends StatefulWidget {
-  const SizePicker({
-    this.onSizePick,
-    required this.sizes,
-    super.key,
-  });
-  final Function(num size)? onSizePick;
-  final List<num> sizes;
-
-  @override
-  State<SizePicker> createState() => _SizePickerState();
-}
-
-class _SizePickerState extends State<SizePicker> {
-  num currentSize = 39;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: widget.sizes
-          .map(
-            (size) => GestureDetector(
-              onTap: () {
-                setState(() {
-                  currentSize = size;
-                });
-                widget.onSizePick?.call(size);
-              },
-              child: Container(
-                width: 40.w,
-                height: 40.h,
-                margin: EdgeInsets.only(right: 15.w),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: currentSize != size ? Border.all() : null,
-                  color: currentSize == size
-                      ? AppColors.neutral500
-                      : Colors.transparent,
+      bottomSheet: SizedBox(
+        height: 90.h,
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 30.w,
+              vertical: 16.h,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Text('Price', style: AppTyography.bodyText_100()),
+                    Text(
+                      '\$ ${widget.product.price}',
+                      style: AppTyography.headline_600()
+                          .copyWith(fontWeight: FontWeight.bold),
+                    )
+                  ],
                 ),
-                child: Center(
-                  child: Text(
-                    size.toString(),
-                    style: AppTyography.headline_300().copyWith(
-                      color: currentSize == size
-                          ? AppColors.neutralWhite
-                          : AppColors.neutral400,
+                SizedBox(
+                  height: 50.h,
+                  width: 156.w,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.neutral500,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      'ADD TO CART',
+                      style: AppTyography.headline_300()
+                          .copyWith(color: AppColors.neutralWhite),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          )
-          .toList(),
+          ),
+        ),
+      ),
     );
   }
 }
