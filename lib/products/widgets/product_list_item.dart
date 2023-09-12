@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:challenge_fl/products/models/models.dart';
+import 'package:challenge_fl/products/view/product_detail_page.dart';
 import 'package:challenge_fl/shared/assets.dart';
 import 'package:challenge_fl/shared/colors.dart';
+import 'package:challenge_fl/shared/shared.dart';
 import 'package:challenge_fl/shared/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,43 +14,48 @@ class ProductListItem extends StatelessWidget {
   final Product product;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 224.h,
-      width: 150.w,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ProductListItemImage(product),
-          SizedBox(height: 10.h),
-          Text(
-            product.name,
-            style: AppTyography.bodyText_100(),
-          ),
-          Row(
-            children: [
-              const Icon(
-                Icons.star_rounded,
-                color: AppColors.brand500,
-              ),
-              SizedBox(width: 5.w),
-              Text(
-                product.averageRatings.toString(),
-                style: AppTyography.headline_200(),
-              ),
-              SizedBox(width: 5.w),
-              Text(
-                '(${product.reviewCount} Reviews)',
-                style: AppTyography.bodyText_100(),
-              ),
-            ],
-          ),
-          Text(
-            '\$${product.price}',
-            style: AppTyography.headline_300().copyWith(
-              fontWeight: FontWeight.w700,
+    return GestureDetector(
+      onTap: () => context.push(
+        ProductDetailPage(product),
+      ),
+      child: SizedBox(
+        height: 224.h,
+        width: 150.w,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ProductListItemImage(product),
+            SizedBox(height: 10.h),
+            Text(
+              product.name,
+              style: AppTyography.bodyText_100(),
             ),
-          ),
-        ],
+            Row(
+              children: [
+                const Icon(
+                  Icons.star_rounded,
+                  color: AppColors.brand500,
+                ),
+                SizedBox(width: 5.w),
+                Text(
+                  product.averageRatings.toString(),
+                  style: AppTyography.headline_200(),
+                ),
+                SizedBox(width: 5.w),
+                Text(
+                  '(${product.reviewCount} Reviews)',
+                  style: AppTyography.bodyText_100(),
+                ),
+              ],
+            ),
+            Text(
+              '\$${product.price}',
+              style: AppTyography.headline_300().copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -65,10 +72,10 @@ class ProductListItemImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(1.sp),
+      padding: EdgeInsets.all(0.5.sp),
       decoration: BoxDecoration(
         // i know this is off the design, but with the image having a background of white, this is is a possible workaround
-        color: AppColors.neutral300,
+        color: AppColors.neutral300.withOpacity(0.5),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Container(

@@ -1,0 +1,35 @@
+<svg width="172" height="80" viewBox="0 0 172 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="color">
+<g id="BG">
+<g id="Rectangle 31" filter="url(#filter0_d_930_25715)">
+<rect x="20" y="60" width="40" height="132" rx="20" transform="rotate(-90 20 60)" fill="white"/>
+</g>
+</g>
+<g id="color meta">
+<g id="01">
+<circle id="Ellipse 14" cx="41" cy="40" r="9.5" transform="rotate(-90 41 40)" stroke="#E7E7E7"/>
+</g>
+<g id="02">
+<circle id="Ellipse 19" cx="71" cy="40" r="10" transform="rotate(-90 71 40)" fill="#101010"/>
+</g>
+<g id="03">
+<circle id="Ellipse 16" cx="101" cy="40" r="10" transform="rotate(-90 101 40)" fill="#648B8B"/>
+<path id="Vector" d="M100.07 42.1776L104.964 37.2832L105.718 38.036L100.07 43.6832L96.6821 40.295L97.4349 39.5422L100.07 42.1776Z" fill="white"/>
+</g>
+<g id="04">
+<circle id="Ellipse 17" cx="131" cy="40" r="10" transform="rotate(-90 131 40)" fill="#2952CC"/>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_930_25715" x="0" y="0" width="172" height="80" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="10"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_930_25715"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_930_25715" result="shape"/>
+</filter>
+</defs>
+</svg>

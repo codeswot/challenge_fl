@@ -6,6 +6,7 @@ class AppColors {
   static const Color neutralDefault = Color(0xff101010);
   static const Color neutral300 = Color(0xffB7B7B7);
   static const Color neutral500 = Color(0xff101010);
+  static const Color primaryNeutral = Color(0xffE7E7E7);
   static const Color neutralWhite = Color(0xFFFFFFFF);
   //success pallet
   static const Color sucessDefault = Color(0xff52BD94);
